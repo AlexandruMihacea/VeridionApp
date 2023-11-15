@@ -22,11 +22,8 @@ async function gpt(input) {
   for await (const chunk of stream) {
     response.push(chunk.choices[0].text)
   }
-  let concatRes =  response.join()
-  let stringWithoutCommas = concatRes.replace(/,/g, '');
-  console.log(stringWithoutCommas)
-  return stringWithoutCommas;
-
+  let concatRes =  response.join().replace(/,/g, '')
+  return concatRes;
 }
 
 

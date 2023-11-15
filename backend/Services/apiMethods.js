@@ -1,5 +1,5 @@
 const Company = require('../Models/CompanyModel')
-const reviews = require('./onlineReviews');
+const reviews = require('./useGPTMethods');
 require('dotenv').config()
 const axios = require('axios');
 
@@ -7,7 +7,6 @@ const apiKey = process.env.API_KEY;
 const apiURL = "https://data.soleadify.com/match/v4/companies"
 
 const apiMethods = {
-
     getCompany: async (company_name, address, phone_number, website) => {
         try{
 
@@ -25,11 +24,18 @@ const apiMethods = {
                 }
             })
 
+
+            
+
             const company = new Company(response.data);
 
-            const updateCompany =  reviews.setReviews(company);
+            const review = await  reviews.setReviews(company);
+            const colors = await reviews.setColors(company);
 
-            return updateCompany;
+            company.colors = colors;
+            company.online_riviews = review;
+
+            return company;
         }catch(err){
             return err;
         }

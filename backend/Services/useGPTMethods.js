@@ -1,7 +1,7 @@
 const Company = require("../Models/CompanyModel");
-const gpt = require("./gpt");
+const gpt = require("../GPT/gpt");
 
-const onlineReviews = {
+const useGPTMethods = {
         setReviews: async (company) => {
             const task = `You have the data for this company: legal name - ${company.company_legal_names}, 
             address - ${company.main_city} ${company.main_street} ${company.main_postcode}, 
@@ -11,15 +11,27 @@ const onlineReviews = {
             keeping the summary to a maximum of 200 words and reword it to look exactly 
             like an internet review of this company. `
             
-            company.online_riviews = await gpt(task);
-            
-            gpt(`Can you find for me what are the predominant colors of the company and give me exactly only their hex codes in the answer you 
+            const onlineRiviews = await gpt(task);
+
+            return onlineRiviews;
+        },
+
+        setColors: async (company) => {
+            const task = `Can you find for me what are the predominant colors of the 
+            company and give me exactly only their hex codes in the answer you 
             will return to me: legal name - ${company.company_legal_names}, 
             address - ${company.main_city} ${company.main_street} ${company.main_postcode}, 
-            with the website - ${company.website_url}`)
+            with the website - ${company.website_url}, the answer to have exacly this format ex: [(#003399),
+            (#66cccc),(#ffffff)] wrote in a js array. `;
 
-            return company;
+            const hexCodeRegex = /#(?:[0-9a-fA-F]{3}){1,2}\b/g;
+            
+            const colors = await gpt(task);
+            const hexCode = colors.match(hexCodeRegex);
+
+            return hexCode; 
         }
+
 }
 
-module.exports = onlineReviews;
+module.exports = useGPTMethods;

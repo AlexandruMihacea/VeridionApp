@@ -1,5 +1,4 @@
 class Company {
-
     constructor(data){
         this.soleadify_id = data.soleadify_id || null;
         this.match_score = data.match_score || null;
@@ -17,7 +16,6 @@ class Company {
         this.employee_count = data.employee_count || null;
         this.estimated_revenue = data.estimated_revenue || null;
         this.short_description = data.short_description || null;
-        this.long_description = data.long_description || null;
         this.main_business_category = data.main_business_category || null;
         this.main_industry = data.main_industry || null;
         this.main_sector = data.main_sector || null;
@@ -28,6 +26,7 @@ class Company {
         this.twitter_url = data.twitter_url || null;
         this.linkedin_url = data.linkedin_url || null;
         this.online_riviews = data.online_riviews || null;
+        this.colors = data.colors || [];
     }
 }   
 
