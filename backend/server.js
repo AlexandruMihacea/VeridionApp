@@ -4,6 +4,7 @@ var router = require('./Routes/index')
 const bodyParser = require("body-parser");
 const port = process.env.PORT | 3000;
 const cors = require("cors");
+const path = require('path');
 
 const corsOptions = {
     origin: true,
@@ -23,9 +24,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/', router);
 
-app.get('/', (req, res) => {
-  res.send(req.body);
-});
+const _dirname = path.dirname("");
+const buildPath = path.join(_dirname, '../frontend/dist');
+
+app.use(express.static(buildPath));
+
+app.get("/*", function(req,res){
+
+  res.sendFile(
+    path.join(_dirname, '../frontend/dist/index.html'),
+    function(err){
+      if(err){
+        res.status(500).send(err)
+      }
+    }
+  )
+})
+
+
 
 app.listen(port, () => {
   console.log(`Start on port ${port}`);
