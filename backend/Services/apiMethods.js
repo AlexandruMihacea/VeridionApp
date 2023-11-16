@@ -27,9 +27,7 @@ const apiMethods = {
             const company = new Company(response.data);
 
             const review = await  reviews.setReviews(company);
-            const colors = await reviews.setColors(company);
 
-            company.colors = colors;
             company.online_riviews = review;
 
             return company;

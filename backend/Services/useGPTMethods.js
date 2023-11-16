@@ -15,23 +15,6 @@ const useGPTMethods = {
 
             return onlineRiviews;
         },
-
-        setColors: async (company) => {
-            const task = `Can you find for me what are the predominant colors of the 
-            company and give me exactly only their hex codes in the answer you 
-            will return to me: legal name - ${company.company_legal_names}, 
-            address - ${company.main_city} ${company.main_street} ${company.main_postcode}, 
-            with the website - ${company.website_url}, the answer to have exacly this format ex: [(#003399),
-            (#66cccc),(#ffffff)] wrote in a js array. `;
-
-            const hexCodeRegex = /#(?:[0-9a-fA-F]{3}){1,2}\b/g;
-            
-            const colors = await gpt(task);
-            const hexCode = colors.match(hexCodeRegex);
-
-            return hexCode; 
-        }
-
 }
 
 module.exports = useGPTMethods;

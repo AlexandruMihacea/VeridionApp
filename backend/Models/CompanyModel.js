@@ -11,7 +11,6 @@ class Company {
         this.main_street = data.main_street || null;
         this.main_postcode = data.main_postcode || null;
         this.num_locations = data.num_locations || 0;
-        this.locations = data.locations || [];
         this.year_founded = data.year_founded || null;
         this.employee_count = data.employee_count || null;
         this.estimated_revenue = data.estimated_revenue || null;
@@ -26,7 +25,6 @@ class Company {
         this.twitter_url = data.twitter_url || null;
         this.linkedin_url = data.linkedin_url || null;
         this.online_riviews = data.online_riviews || null;
-        this.colors = data.colors || [];
     }
 }   
 

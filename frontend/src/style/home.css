@@ -29,24 +29,8 @@
     color: grey;
 }
 
-.compani-data-content{
-    display: flex;
-    flex-direction: row;
-}
-
-.company-data-container{
-    width: 30%;
-    border-color: black;
-    border: 2px solid;
-    border-radius: 5px;
-    margin-right: 2%;
-    margin-left: 2%;
-}
-
-.review-content{
-    margin-top: 2%;
-    border: 1px solid grey;
-    padding-bottom: 1%;
+.grid-container {
+    margin-bottom: 3%;
 }
 
 @media only screen and (max-width: 730px){

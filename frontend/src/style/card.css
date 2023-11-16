@@ -1,0 +1,55 @@
+.compani-data-content{
+    display: flex;
+    flex-direction: row;
+}
+
+.company-data-card{
+    width: 30%;
+    border-color: black;
+    border: 2px solid;
+    border-radius: 10px;
+    margin-right: 2%;
+    margin-left: 2%;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.339);
+    /* background-color: #fbaf3c; */
+}
+
+.review-container{
+    margin-top: 2%;
+    border: 3px solid black;
+    padding-bottom: 1%;
+    background-color: #4caf4f98;
+}
+
+.header-company-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.colors-container{
+    margin-left: 5%;
+    margin-top: 3%;
+    width: 150px;
+    height: 75px;
+}
+
+.review-content{
+    padding: 1%;
+}
+
+.review-content-title{
+    padding-left: 1%;
+}
+
+@media only screen and (max-width: 730px){
+    .grid-container {
+        display:flex ;
+        flex-direction: column !important; 
+        align-items: center;
+    }
+
+    .compani-data-content{
+        flex-direction: column;
+        width: 300%;
+    }
+}

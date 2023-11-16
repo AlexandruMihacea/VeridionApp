@@ -6,8 +6,11 @@ import InputLabel from '@mui/material/InputLabel';
 import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import companyApi  from '../../api/company_api';
+import CsvUploader from '../csv/CSVParse';
+import "../style/form.css";
 
-export default function ComposedTextField({dataReceived, onDataFetching}) {
+const CompanyForm = ({dataReceived, onLoading}) => {
+    const [csvData, setCsvData] = useState([]);
     const [company_name, set_company_name] = useState(['']);
     const [company_address, set_company_address] = useState('');
     const [company_website, set_company_website] = useState('');
@@ -19,6 +22,10 @@ export default function ComposedTextField({dataReceived, onDataFetching}) {
       phone_number:''
     });
 
+    const handleCsvUpload = (data) => {
+      setCsvData(data);
+    };
+
     useEffect(() => {
       set_company({
         company_name: company_name,
@@ -26,7 +33,14 @@ export default function ComposedTextField({dataReceived, onDataFetching}) {
         website: company_website,
         phone_number: company_phone
       })
-    },[company_address,company_name,company_phone,company_website])
+
+      if(csvData.length > 0){
+        for(const el of csvData){
+          el.company_name = [el.company_name];
+        }
+        sendDataCSV();
+      }
+    },[company_address,company_name,company_phone,company_website,csvData])
 
 
     const sendData = async () => { 
@@ -36,15 +50,44 @@ export default function ComposedTextField({dataReceived, onDataFetching}) {
         alert("Please fill at least one field of Address or Website or PhoneNumber");
       } else {
         try{
-          onDataFetching(false)
+          onLoading(false)
           const response = await companyApi.getCompany(company);
           dataReceived(response);
         }catch(err){
           console.log(err);
         }finally {
-          onDataFetching(true)
+          onLoading(true)
         }
       }
+    }
+
+    const sendDataCSV = async () => { 
+        let ok = 0;
+        for(const el of csvData){
+            if(el.company_name[0].length === 0){
+              alert("Company Name is mandatory");
+              ok = 1;
+              return;
+            }else if (el.address_txt.length === 0 && el.phone_number.length === 0 && el.website.length === 0) {
+              alert("Please fill at least one field of Address or Website or PhoneNumber");
+              ok = 1;
+              return;
+            }
+        } 
+        if(ok === 0){
+          try{
+              onLoading(false)
+              console.log(csvData);
+              const response = await companyApi.getCompaniesList(csvData);
+              dataReceived(response);
+            }catch(err){
+              console.log(err);
+            }finally {
+              onLoading(true)
+              setCsvData([]);
+            }
+        }
+
     }
 
     return (
@@ -72,7 +115,11 @@ export default function ComposedTextField({dataReceived, onDataFetching}) {
           <InputLabel htmlFor="component-simple-label-phone">Phone Number</InputLabel>
           <Input id="component-simple-phone" defaultValue="" onChange={(e) => set_company_phone(e.target.value)}/>
         </FormControl>
-        <Button variant="contained" onClick={sendData} style={{backgroundColor:'#fbb03c'}}>Trimite</Button>
+        <div className='btn-container'>
+          <Button variant="contained" onClick={sendData} style={{backgroundColor:'#fbb03c'}}>SEND</Button>
+          <CsvUploader onUpload={handleCsvUpload} />
+        </div>
       </Box>
     );
 }
+export default CompanyForm;
