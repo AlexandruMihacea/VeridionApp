@@ -1,12 +1,16 @@
 import axios from 'axios';
-const url = "http://localhost:8080/"
+const url = "http://localhost:3000/company"
 
 
 const companyApi = {
     getCompany: async (company) => {
-        const response = await axios.get(url+"company", company);
-        console.log(response.data);
-        return response.data;
+        try{
+            const response = await axios.post(url,company);
+            return response.data;        
+        }catch(err){
+            console.log(err);
+        }
+
     }
 }
 

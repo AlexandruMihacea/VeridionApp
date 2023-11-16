@@ -24,9 +24,6 @@ const apiMethods = {
                 }
             })
 
-
-            
-
             const company = new Company(response.data);
 
             const review = await  reviews.setReviews(company);
@@ -37,6 +34,7 @@ const apiMethods = {
 
             return company;
         }catch(err){
+            console.log(err);
             return err;
         }
     },
