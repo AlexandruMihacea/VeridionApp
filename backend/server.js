@@ -24,22 +24,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/', router);
 
-const _dirname = path.dirname("");
+const _dirname = __dirname;
 const buildPath = path.join(_dirname, '../frontend/dist');
 
 app.use(express.static(buildPath));
 
-app.get("/*", function(req,res){
-
+app.get("/*", function(req, res) {
   res.sendFile(
     path.join(_dirname, '../frontend/dist/index.html'),
-    function(err){
-      if(err){
-        res.status(500).send(err)
+    function(err) {
+      if (err) {
+        res.status(500).send(err);
       }
     }
-  )
-})
+  );
+});
 
 
 
